@@ -3,15 +3,24 @@ Format 512 512 1
 Projection "perspective" "fov" 30
 ShadingRate 1
 
-Translate -0.5 -0.5 1.9
+# Turn off jittered sampling for crispness
+Hider "hidden" "jitter" 0
+
+LightSource "distantlight" 1
+
+Translate -0.5 -0.5 2
+Rotate 45 1 0 0
 
 WorldBegin
-	LightSource "ambientlight" 1 "intensity" 1
 	Surface "ice"
 	Color 0.765 0.89 0.97
 
 	AttributeBegin
-		Polygon "P" [0 0 0  0 1 0  1 1 0  1 0 0] 
-				"st" [0 1  0 0  1 0  1 1]
+		TransformBegin
+			Attribute "displacementbound" "float sphere" [1.0] "coordinatesystem" ["shader"]
+			Displacement "iceDisplacement"
+			Polygon "P" [0 0 0  0 1 0  1 1 0  1 0 0] 
+					"st" [0 1  0 0  1 0  1 1]
+		TransformEnd
 	AttributeEnd
 WorldEnd
